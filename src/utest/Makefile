@@ -21,7 +21,7 @@ OBJECTS += $(patsubst %.c,%.o,$(CFILES))
 
 
 # ======================================================
- CXXFLAGS += -c
+#CXXFLAGS += -c
  CXXFLAGS += -g #produce debugging information
  CXXFLAGS += -fverbose-asm
 #CXXFLAGS += -w # hide all warnings 
@@ -33,7 +33,7 @@ OBJECTS += $(patsubst %.c,%.o,$(CFILES))
 
 
 # ======================================================
- LPATHS += -L../adts/bin/x
+ LPATHS += -L../adts/bin/
  LNAMES += -ladts
 
 
@@ -41,6 +41,8 @@ OBJECTS += $(patsubst %.c,%.o,$(CFILES))
  HPATHS += -I ../adts/
 # ======================================================
 
+# IMPORTANT!!! - Run this export before building utest.exe
+# export LD_LIBRARY_PATH="/home/ocardona/Documents/sample_cpp/src/adts/bin/":$LD_LIBRARY_PATH
 
 # ======================================================
 # "all" should always be the first defined target to ensure default build
@@ -61,7 +63,8 @@ build:
 	@echo "========"
 	mkdir -p bin
 	#$(CXX) $(HPATHS) $(CXXFLAGS) -o bin/utest.exe $(CFILES) $(LPATHS) $(LNAMES)
-	$(CXX) $(HPATHS) $(CXXFLAGS) $(CFILES) -o bin/utest.exe $(LPATHS) $(LNAMES)
+	#$(CXX) $(CXXFLAGS) $(CFILES) -o bin/utest.exe $(LPATHS) $(LNAMES) $(HPATHS)
+	$(CXX)  $(CXXFLAGS) $(CFILES) -o bin/utest.exe $(LPATHS) $(LNAMES) $(HPATHS)
 
 cleanup:
 	@echo ""

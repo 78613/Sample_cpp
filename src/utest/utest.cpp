@@ -1,5 +1,5 @@
 
-#include <utest.hpp>
+//#include <utest.hpp>
 #include <test.hpp>
 #include <iostream>
 
@@ -8,7 +8,7 @@ main(void)
 {
 	int rc = 0;
 
-	//lib_active();
+	lib_active();
 	std::cout << "Hello World!" << std::endl;
 
 	return rc;
