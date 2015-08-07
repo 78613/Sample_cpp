@@ -16,8 +16,8 @@ OBJECTS += $(patsubst %.c,%.o,$(CFILES))
 
 # Use color enabled GCC output for readability
 # ======================================================
- CC       = g++ # C   compiler
- CXX      = g++      # C++ Compiler
+#CXX      = g++      # C++ Compiler
+ CXX      = clang++      # C++ Compiler
 
 
 # ======================================================
@@ -62,8 +62,6 @@ build:
 	@echo "Compile:"
 	@echo "========"
 	mkdir -p bin
-	#$(CXX) $(HPATHS) $(CXXFLAGS) -o bin/utest.exe $(CFILES) $(LPATHS) $(LNAMES)
-	#$(CXX) $(CXXFLAGS) $(CFILES) -o bin/utest.exe $(LPATHS) $(LNAMES) $(HPATHS)
 	$(CXX)  $(CXXFLAGS) $(CFILES) -o bin/utest.exe $(LPATHS) $(LNAMES) $(HPATHS)
 
 cleanup:

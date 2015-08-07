@@ -1,11 +1,8 @@
 # ======================================================
-#HFILES  += adts.hpp
+HFILES  += test.hpp
 
 # ======================================================
-#CFILES  += adts_rbt.cpp
-
-# ======================================================
- CFILES  += test.cpp
+CFILES  += test.cpp
 
 
 # Everything below this line is standard Makefile logic:
@@ -19,7 +16,7 @@ OBJECTS += $(patsubst %.c,%.o,$(CFILES))
 # Use color enabled GCC output for readability
 # ======================================================
  CC       = g++ # C   compiler
- CXX      = g++      # C++ Compiler
+ CXX      = clang++      # C++ Compiler
 
 # ======================================================
  CFLAGS  += -c 

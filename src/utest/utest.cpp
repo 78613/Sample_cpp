@@ -1,7 +1,6 @@
 
-//#include <utest.hpp>
+#include <utest.hpp>
 #include <test.hpp>
-#include <iostream>
 
 int
 main(void)
