@@ -1,39 +1,25 @@
+# Files specified separetely.
 # ======================================================
-HFILES  += test.hpp
-
-# ======================================================
-CFILES  += test.cpp
+include Makefile.files
+HPP_FILES += $(xHPP_FILES)
+CPP_FILES += $(xCPP_FILES)
 
 
 # Everything below this line is standard Makefile logic:
 # ======================================================
-DEPS    += $(HFILES)
-OBJECTS += $(patsubst %.c,%.o,$(CFILES))    
+DEPS    += $(HPP_FILES)
+OBJECTS += $(patsubst %.c,%.o,$(CPP_FILES))    
 
-# declare non-files
+
+# Declare non-files
+# ======================================================
 .PHONY: all 
+
 
 # Use color enabled GCC output for readability
 # ======================================================
- CC       = g++ # C   compiler
- CXX      = clang++      # C++ Compiler
-
-# ======================================================
- CFLAGS  += -c 
- CFLAGS  += -g # Produce debugging information
- CFLAGS  += -fverbose-asm
- CFLAGS  += -w # hide all warnings 
- CFLAGS  += -save-temps
-#CFLAGS  += -std=gnu99 # Use the c99 standard / with gnu extensions
- CFLAGS  += -Wall 
- CFLAGS  += -Wextra
- CFLAGS  += -O3
- CFLAGS  += -D__ADTS_DISPLAY
-
-#CFLAGS  += -v 
-#CFLAGS  += -Q # Print compiled function and statistics
-#CFLAGS  += -Werror 
-#CFLAGS  += -pedantic
+#CXX = g++      # C++ Compiler
+ CXX = clang++  # C++ Compiler - improved diagnosability
 
 
 # ======================================================
@@ -54,28 +40,26 @@ all: prepare \
      build   \
      cleanup
 
-
 prepare: 
 	@echo "" 
 	@echo "Cleanup:" 
 	@echo "========"
-	rm -fr bin *.[ii,s,o,so]
+	rm -fr bin *.[ii,s,o,so,bc]
 
 build:
 	@echo ""
 	@echo "Compile Shared Library:"
 	@echo "======================="
 	mkdir -p bin
-	$(CXX) -I ${PWD} -fPIC $(CXXFLAGS) $(CFILES) 
+	$(CXX) -I ${PWD} -fPIC $(CXXFLAGS) $(CPP_FILES) 
 	$(CXX) -I ${PWD} -shared -fPIC -o libadts.so $(OBJECTS) -lrt
-	#$(CXX) -I ${PWD} -shared -fPIC -o libadts.so ${OBJECTS} -lrt
 
 cleanup:
 	@echo ""
 	@echo "Archive Files:"
 	@echo "======================="
 	mkdir -p bin
-	mv *.[ii,s,o] bin/
+	mv *.[ii,s,o,bc] bin/
 	mv *.so bin/
 
 
