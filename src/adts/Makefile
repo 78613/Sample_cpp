@@ -1,8 +1,25 @@
+# ======================================================
+# Makefile
+#    |
+#    +----- Makefile.files // Source Code
+#    +----- Makefile.rules // Common compulation rules
+#
+# ======================================================
+
 # Files specified separetely.
 # ======================================================
-include Makefile.files
+include Makefile.files.mk
 HPP_FILES += $(xHPP_FILES)
 CPP_FILES += $(xCPP_FILES)
+
+
+# Rules are common to all compilation units.	
+# ======================================================
+include ../Makefile.rules.mk
+CXX       = $(xCXX)
+CXXFLAGS += $(xCXXFLAGS)
+CXXFLAGS += -c    # Compile only - No linking
+CXXFLAGS += -fPIC # Position independent code - dynamic linking | shared library
 
 
 # Everything below this line is standard Makefile logic:
@@ -16,50 +33,30 @@ OBJECTS += $(patsubst %.c,%.o,$(CPP_FILES))
 .PHONY: all 
 
 
-# Use color enabled GCC output for readability
-# ======================================================
-#CXX = g++      # C++ Compiler
- CXX = clang++  # C++ Compiler - improved diagnosability
-
-
-# ======================================================
- CXXFLAGS += -c
- CXXFLAGS += -g #produce debugging information
- CXXFLAGS += -fverbose-asm
-#CXXFLAGS += -w # hide all warnings 
- CXXFLAGS += -save-temps
- CXXFLAGS += -Wall
- CXXFLAGS += -Wextra
-#CXXFLAGS += -O3
- CXXFLAGS += -D__ADTS_DISPLAY
-
-
-# ======================================================
 # "all" should always be the first defined target to ensure default build
+# ======================================================
 all: prepare \
      build   \
-     cleanup
+	 cleanup
 
 prepare: 
 	@echo "" 
-	@echo "Cleanup:" 
+	@echo "Prepare:" 
 	@echo "========"
 	rm -fr bin *.[ii,s,o,so,bc]
-
 build:
 	@echo ""
 	@echo "Compile Shared Library:"
 	@echo "======================="
 	mkdir -p bin
-	$(CXX) -I ${PWD} -fPIC $(CXXFLAGS) $(CPP_FILES) 
+	$(CXX) -I ${PWD} $(CXXFLAGS) $(CPP_FILES) 
 	$(CXX) -I ${PWD} -shared -fPIC -o libadts.so $(OBJECTS) -lrt
-
 cleanup:
 	@echo ""
-	@echo "Archive Files:"
-	@echo "======================="
+	@echo "Cleanup:"
+	@echo "========"
 	mkdir -p bin
-	mv *.[ii,s,o,bc] bin/
+	mv *.[i,s,o] bin/
+	mv *.ii bin/
+	mv *.bc bin/
 	mv *.so bin/
-
-

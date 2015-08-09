@@ -1,75 +1,77 @@
+# ======================================================
+# Makefile
+#    |
+#    +----- Makefile.files // Source Code
+#    +----- Makefile.rules // Common compulation rules
+#
+# ======================================================
+
+
+# Files specified separetely.
+# ======================================================
+include Makefile.files.mk
+HPP_FILES += $(xHPP_FILES)
+CPP_FILES += $(xCPP_FILES)
+
+
+# Rules are common to all compilation units.	
+# ======================================================
+include ../Makefile.rules.mk
+CXX       = $(xCXX)
+CXXFLAGS += $(xCXXFLAGS)
+
 
 # ======================================================
-HFILES  += utest.hpp
+LPATHS += -L../adts/bin/
+LNAMES += -ladts
 
-CFILES  += utest.cpp
+
+HPATHS += -I .
+HPATHS += -I ../adts/
 
 
 # Everything below this line is standard Makefile logic:
 # ======================================================
-DEPS    += $(HFILES)
-OBJECTS += $(patsubst %.c,%.o,$(CFILES))    
+DEPS    += $(HPP_FILES)
+OBJECTS += $(patsubst %.c,%.o,$(CPP_FILES))    
 
 # declare non-files
 .PHONY: all 
 
 
-# Use color enabled GCC output for readability
-# ======================================================
-#CXX      = g++      # C++ Compiler
- CXX      = clang++      # C++ Compiler
-
-
-# ======================================================
-#CXXFLAGS += -c
- CXXFLAGS += -g #produce debugging information
- CXXFLAGS += -fverbose-asm
-#CXXFLAGS += -w # hide all warnings 
- CXXFLAGS += -save-temps
- CXXFLAGS += -Wall
- CXXFLAGS += -Wextra
-#CXXFLAGS += -O3
- CXXFLAGS += -D__ADTS_DISPLAY
-
-
-# ======================================================
- LPATHS += -L../adts/bin/
- LNAMES += -ladts
-
-
- HPATHS += -I .
- HPATHS += -I ../adts/
-# ======================================================
-
-# IMPORTANT!!! - Run this export before building utest.exe
-# export LD_LIBRARY_PATH="/home/ocardona/Documents/sample_cpp/src/adts/bin/":$LD_LIBRARY_PATH
-
 # ======================================================
 # "all" should always be the first defined target to ensure default build
 all: prepare \
      build   \
-     cleanup
-
+     cleanup \
+	 unittest
 
 prepare:
 	@echo ""
-	@echo "Cleanup:"
+	@echo "Prepare:"
 	@echo "========"
-	rm -fr bin *.[ii,s,o,so]
-
+	rm -fr bin *.[i,s,o,] *.ii *.bc
 build:
 	@echo ""
 	@echo "Compile:"
 	@echo "========"
 	mkdir -p bin
-	$(CXX)  $(CXXFLAGS) $(CFILES) -o bin/utest.exe $(LPATHS) $(LNAMES) $(HPATHS)
-
+	$(CXX)  $(CXXFLAGS) $(CPP_FILES) -o bin/utest.exe $(LPATHS) $(LNAMES) $(HPATHS)
 cleanup:
+	@echo ""
+	@echo "Cleanup:"
+	@echo "========"
+	date
+	mv *.[i,s,o] bin/
+	mv *.ii bin/
+	mv *.bc bin/
+unittest:	
 	@echo ""
 	@echo "Unit Test:"
 	@echo "=========="
-	date
-	mv *.[i,s,o] bin/
-	ls -alF bin/
 	bin/utest.exe 
 
+
+# ======================================================
+# If compilation failure, see README.md file in ths git repository.
+# ======================================================

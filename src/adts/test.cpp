@@ -1,7 +1,10 @@
 //g++ hello.cc -o hello
 
-#include <test.hpp>
-#if 0 
+//#include <test.hpp>
+
+#include <iostream>
+
+#if 0
 int
 main()
 {
