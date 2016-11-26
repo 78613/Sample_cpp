@@ -1,18 +1,6 @@
 //g++ hello.cc -o hello
 
-//#include <test.hpp>
-
-#include <iostream>
-
-#if 0
-int
-main()
-{
-  std::cout << "Hello World!" << std::endl;
-
-  return 0;
-} //main()
-#endif
+#include <test.hpp>
 
 void
 lib_active(void)

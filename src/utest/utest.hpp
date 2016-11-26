@@ -1,11 +1,6 @@
-#ifndef _HPP_UTEST
-#define _HPP_UTEST
+#pragma once
 
 // Headers
 // ==================
 #include <iostream>
-
-
-
-#endif /* _HPP_UTEST */
 
