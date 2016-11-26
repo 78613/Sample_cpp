@@ -1,6 +1,4 @@
-
-#ifndef _HPP_TEST
-#define _HPP_TEST
+#pragma once
 
 // Headers
 // ==================
@@ -13,6 +11,5 @@
 void
 lib_active(void);
 
-#endif /* _HPP_TEST */
 
 
