@@ -11,6 +11,7 @@
  xCXXFLAGS += -Wall # All warnings enabled
  xCXXFLAGS += -Wextra
 #xCXXFLAGS += -O3
+ xCXXFLAGS += -std=c++1z #C++14 plus experimental features
 
 
 # Local project flag definitions
